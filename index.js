@@ -8,6 +8,7 @@ const app = express();
 
 // Models initialization
 require("./models/users.model");
+require("./models/transactions.model");
 app.use(express.json());
 
 app.get("/", (req, res) => {
