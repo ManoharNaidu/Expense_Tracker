@@ -6,9 +6,17 @@ const errorHandler = require("./handlers/errorHandler");
 
 const app = express();
 
+// Models initialization
+require("./models/users.model");
+app.use(express.json());
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+// Routes initialization
+const userRoutes = require("./modules/users/users.routes");
+app.use("/api/users", userRoutes);
 
 app.use(errorHandler);
 
