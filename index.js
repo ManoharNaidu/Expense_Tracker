@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 // Routes initialization
 const userRoutes = require("./modules/users/users.routes");
-app.use("/api/users", userRoutes);
+app.use("/api/user", userRoutes);
 
 app.use(errorHandler);
 

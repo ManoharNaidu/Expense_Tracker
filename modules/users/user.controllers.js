@@ -1,4 +1,5 @@
 const User = require("../../models/users.model");
+const createToken = require("../../config/jwtToken");
 const bcrypt = require("bcryptjs");
 
 exports.registerUser = async (req, res) => {
@@ -22,7 +23,7 @@ exports.registerUser = async (req, res) => {
     email,
     password: hashedPassword,
   });
-  res.json(newUser);
+  createToken(newUser, "User created successfuly", res);
 };
 
 exports.loginUser = async (req, res) => {
@@ -36,8 +37,13 @@ exports.loginUser = async (req, res) => {
     throw new Error("Invalid Email");
   }
   if (await bcrypt.compare(password, user.password)) {
-    res.json(user);
+    createToken(user, "Logged in successfully", res);
   } else {
     throw new Error("Invalid Password");
   }
+};
+
+exports.userDashboard = async (req, res) => {
+  const user = await User.findOnebyId(req.user.id);
+  res.status(200).json({ user });
 };
