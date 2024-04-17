@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    reset_code: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );
