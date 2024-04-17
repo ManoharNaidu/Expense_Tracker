@@ -64,3 +64,12 @@ exports.addExpense = async (req, res) => {
     message: "Expense added successfully",
   });
 };
+
+exports.getTransactions = async (req, res) => {
+  const transactions = await Transaction.find({
+    user_id: req.user._id,
+    ...req.query,
+  });
+
+  res.status(200).json({ transactions });
+};

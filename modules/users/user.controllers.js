@@ -53,7 +53,7 @@ exports.logoutUser = async (req, res) => {
 };
 
 exports.userDashboard = async (req, res) => {
-  const user = await User.findById(req.user._id);
-  const transactions = await Transaction.find({ user_id: req.user._id });
+  const user = await User.findById(req.user._id).select("-password");
+  const transactions = await Transaction.find({ user_id: req.user._id }); // can add sort("+/-createdAt") and limit(number)
   res.status(200).json({ user, transactions });
 };
