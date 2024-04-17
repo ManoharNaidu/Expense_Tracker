@@ -118,30 +118,32 @@ exports.updateTransaction = async (req, res) => {
   const transaction = await Transaction.findById(id);
   if (!transaction) throw new Error("Transaction not found");
 
-  await Transaction.findByIdAndUpdate(
-    id,
-    {
-      amount,
-      remarks,
-    },
-    { runValidators: true }
-  );
-
   await User.findByIdAndUpdate(
     req.user._id,
     {
       $inc: {
         balance:
           transaction.transaction_type === "income"
-            ? -transaction.amount + amount
-            : transaction.amount - amount,
+            ? -transaction.amount
+            : transaction.amount,
       },
     },
     { runValidators: true }
+  );
+
+  await Transaction.findByIdAndUpdate(
+    {
+      _id: id,
+      user_id: req.user._id,
+    },
+    {
+      amount,
+      remarks,
+    }
   );
 
   res.status(200).json({
     status: "success",
     message: "Transaction updated successfully",
   });
-}
+};
