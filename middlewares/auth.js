@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const auth = (req, res, next) => {
-  const accessToken = req.headers.token;
+  const accessToken = req.headers.Cookie.split("=")[1];
   if (!accessToken) {
     throw new Error("accessToken is required");
   }
