@@ -1,6 +1,8 @@
 const User = require("../../models/users.model");
 const Transaction = require("../../models/transactions.model");
 const createToken = require("../../config/jwtToken");
+const mailTrap = require("../../config/mailTrap");
+const nodemail = require("../../config/nodemail");
 const bcrypt = require("bcryptjs");
 
 exports.registerUser = async (req, res) => {
@@ -24,6 +26,8 @@ exports.registerUser = async (req, res) => {
     email,
     password: hashedPassword,
   });
+  // mailTrap(newUser.email, newUser.name);
+  nodemail(newUser.email, newUser.name);
   createToken(newUser, "User created successfuly", res);
 };
 
