@@ -6,6 +6,7 @@ const errorHandler = (err, req, res, next) => {
         status: "error",
         message: err.message,
       });
+      return;
     }
     console.log(err);
     res.status(500).json({
