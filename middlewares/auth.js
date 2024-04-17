@@ -1,5 +1,7 @@
+const jwt = require("jsonwebtoken");
+
 const auth = (req, res, next) => {
-  const accessToken = req.headers.authorization.replace("Bearer ", "");
+  const accessToken = req.headers.token;
   if (!accessToken) {
     throw new Error("accessToken is required");
   }

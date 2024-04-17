@@ -1,4 +1,5 @@
 const User = require("../../models/users.model");
+const Transaction = require("../../models/transactions.model");
 const createToken = require("../../config/jwtToken");
 const bcrypt = require("bcryptjs");
 
@@ -43,7 +44,16 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+exports.logoutUser = async (req, res) => {
+  res.cookie("token", "", {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({ message: "Logged out successfully" });
+};
+
 exports.userDashboard = async (req, res) => {
-  const user = await User.findOnebyId(req.user.id);
-  res.status(200).json({ user });
+  const user = await User.findById(req.user._id);
+  const transactions = await Transaction.find({ user_id: req.user._id });
+  res.status(200).json({ user, transactions });
 };

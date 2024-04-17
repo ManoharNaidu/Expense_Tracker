@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const createToken = async (user, status, res) => {
   const accessToken = await jwt.sign(
     {
-      id: user._id,
+      _id: user._id,
       name: user.name,
     },
     process.env.JWT_SECRET,
@@ -15,7 +15,6 @@ const createToken = async (user, status, res) => {
   };
   res.status(200).cookie("token", accessToken, options).json({
     status,
-    user,
   });
 };
 

@@ -17,7 +17,9 @@ app.get("/", (req, res) => {
 
 // Routes initialization
 const userRoutes = require("./modules/users/users.routes");
+const transactionRoutes = require("./modules/transactions/transactions.routes");
 app.use("/api/user", userRoutes);
+app.use("/api/transaction", transactionRoutes);
 
 app.use(errorHandler);
 
